@@ -18,6 +18,7 @@ Replace <type> with either test, train, or valid based on the dataset you wish t
 Example:
 
 `python data_analysis.py --type test`
+
 This command analyzes the test dataset by comparing predictions_test.json with gt_test.json.
 
 
