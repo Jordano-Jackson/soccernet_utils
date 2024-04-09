@@ -23,4 +23,4 @@ This command analyzes the test dataset by comparing predictions_test.json with g
 
 
 ### Output
-The analysis results will be generated in results/analysis_results.csv.
+The analysis results will be generated in results/analysis_results_<type>.csv.
