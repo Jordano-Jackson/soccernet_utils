@@ -49,8 +49,10 @@ with open(pred_path, 'r') as pred_file, open(gt_path, 'r') as gt_file, open(csv_
         gt_value = gt_dict[key]['Action class']
         pred_index = action_class.index(pred_value)
         gt_index = action_class.index(gt_value)
-        action_results[pred_value]['cnt_gt']+=1
-        action_results[gt_value]['cnt_pred']+=1
+        action_results[pred_value]['cnt_pred']+=1
+        action_results[gt_value]['cnt_gt']+=1
+        if gt_value == 'Dive':
+            print ("Dive video num: ",key)
 
         action_confusion_matrix[gt_index][pred_index]+=1
 
@@ -128,6 +130,11 @@ with open(pred_path, 'r') as pred_file, open(gt_path, 'r') as gt_file, open(csv_
 
     # Severity output 
     writer.writerow(['# Severity Distribution'])
+    writer.writerow(['Metric', 'Value'])
+    writer.writerow(['Accuracy', 1 - len(severity_error)/len(pred_dict)])
+    writer.writerow(['Total video', len(pred_dict)])
+    writer.writerow(['Total errors', len(severity_error)])
+
     writer.writerow(['Severity'] + [gt_name for gt_name in severity_class])
     writer.writerow(['GT'] + [gt_val for gt_val in gt_severity_count])
     writer.writerow(['Pred'] + [pred_val for pred_val in pred_severity_count])
@@ -148,7 +155,8 @@ with open(pred_path, 'r') as pred_file, open(gt_path, 'r') as gt_file, open(csv_
         accuracy = correct / (correct+wrong)
         writer.writerow([gt_name, f"{accuracy:.2f}"])
 
-
+    writer.writerow(['# Error Video Numbers'])
+    writer.writerow(['Error video numbers'] + severity_error)
     
 
     """
